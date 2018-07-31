@@ -1,7 +1,7 @@
 const express = require('express');
-
-
 const route = express.Router();
+const Character = require('../models/character')
+
 
 route.get('/characters', function(req,res){
     res.send({type: 'GET'})
@@ -9,7 +9,8 @@ route.get('/characters', function(req,res){
 
 //ADD CHARACTER TO DB
 route.post('/characters', function(req,res){
-    console.log(req.body);
+    // console.log(req.body);
+    Character.create(req.body);
     
     res.send({
         type: 'POST',

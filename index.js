@@ -1,8 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 
 //Setup express enviroment
 const app = express();
+
+//Make connect to MongoDB
+
+mongoose.connect('mongodb://localhost/character');
+mongoose.Promise = global.Promise;
 
 app.get('/api', function(req,res){
     console.log('Make request');
