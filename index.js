@@ -10,6 +10,9 @@ app.get('/api', function(req,res){
     
 });
 
+//Middleware function called before respond from server
+app.use(bodyParser.json());
+
 app.use('/api', require('./routes/api'));
 
 //Listen requests
