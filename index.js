@@ -12,6 +12,8 @@ mongoose.connect('mongodb://localhost/character');
 
 mongoose.Promise = global.Promise;
 
+app.use(express.static('public'));
+
 app.get('/api', function(req,res){
     console.log('Make request');
     res.send({name: 'Seweryn'});

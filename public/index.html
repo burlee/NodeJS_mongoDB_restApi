@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+    <body>
+        <h1 class="title">Charakters</h1>
+        <div id="homepage">
+            <div id="ninjas">
+                
+            </div>
+        </div>
+        
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script src="https://unpkg.com/react@15/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    
+    
+    <script type="text/babel">
+    
+    var character = React.createClass({
+            getInitialState: function(){
+                return({
+                    characters: []
+                });
+            },
+            handleSubmit: function(e){
+                e.preventDefault();
+                var lng = this.refs.lng.value;
+                var lat = this.refs.lat.value;
+                fetch('/api/characters?lng=' + lng + '&lat=' + lat).then(function(data){
+                    return data.json();
+                }).then( json => {
+                    this.setState({
+                        character: json
+                    });
+                    console.log(json);
+                });
+            }
+            render: function(){
+                var characters = this.state.characters;
+                characters = characters.map(function(ninja, index){
+                    return(
+                        <li key={index}>
+                            <span className={character.obj.available}></span>
+                            <span className="name">{character.obj.name}</span>
+                            <span className="rank">{character.obj.rank}</span>
+                            <span className="dist">{Math.floor(character.dis / 1000)} km</span>
+                        </li>
+                    );
+                });
+                return(
+                    <div id="ninja-container">
+                        <form id="search" onSubmit={this.handleSubmit}>
+                            <label>Enter your Latitude:</label>
+                            <input type="text" ref="lat" placeholder="latitude" required />
+                            <label>Enter your Longitude:</label>
+                            <input type="text" ref="lng" placeholder="longitude" required />
+                            <input type="submit" value="Find character" />
+                        </form>
+                        <ul>{character}</ul>
+                    </div>
+                );
+            },
+            
+        });
+    
+    </script>
+   
+    </body>
+</html>

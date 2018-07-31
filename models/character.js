@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+const GeoSchema = new Schema({
+    type: {
+        type: String,
+        default: "Point"
+    },
+    coordinates:{
+        type: [Number],
+        index: "2dsphere"
+    }
+});
+
 const characterSchema = new Schema({
     name: {
         type: String,
@@ -12,7 +24,8 @@ const characterSchema = new Schema({
     available: {
         type: Boolean,
         default: false
-    }
+    },
+    geometry: GeoSchema
 });
 
 const Character = mongoose.model('character', characterSchema);

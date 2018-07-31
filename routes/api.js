@@ -4,7 +4,18 @@ const Character = require('../models/character')
 
 
 route.get('/characters', function(req,res,next){
-    res.send({type: 'GET'})
+    // Character.find({}).then(function(characters){
+    //     res.send(characters)
+    // });
+    Character.aggregate().near({
+        near: [parseFloat(req.query.lng), parseFloat(req.query.lat)],
+        maxDistance: 100000,
+        spherical: true,
+        distanceField: 'dist.calculated'
+    }).then(function(characters){
+        res.send(characters);
+    })
+    .catch(next)
 });
 
 //ADD CHARACTER TO DB
